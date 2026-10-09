@@ -1,13 +1,13 @@
 from datetime import datetime, UTC
 
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.database.models.execution import Execution
 from app.database.models.model_registry import ModelRegistry
 
 
 def test_execution_model():
 
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     model = (
         session.query(ModelRegistry)

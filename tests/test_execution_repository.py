@@ -1,14 +1,14 @@
 from datetime import UTC, datetime
 
 from app.analytics.execution_repository import ExecutionRepository
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.database.models.execution import Execution
 from app.database.models.model_registry import ModelRegistry
 
 
 def test_execution_repository():
 
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     model = (
         session.query(ModelRegistry)

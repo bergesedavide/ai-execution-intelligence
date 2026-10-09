@@ -1,4 +1,4 @@
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.registry.model_repository import ModelRepository
 from app.registry.model_service import ModelRegistryService
 from app.schemas.model import ModelInfo
@@ -7,7 +7,7 @@ from app.database.models.model_registry import ModelRegistry
 
 def test_model_registry_service():
 
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     try:
         repository = ModelRepository(session)
@@ -45,7 +45,7 @@ def test_model_registry_service():
         session.close()
 
 def test_get_active_models():
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     try:
         repository = ModelRepository(session)

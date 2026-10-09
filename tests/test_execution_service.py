@@ -2,7 +2,7 @@ import pytest
 from ollama import Client
 from unittest.mock import Mock
 
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.database.models.execution import Execution
 from app.execution.execution_service import ExecutionService
 from app.database.models.model_registry import ModelRegistry
@@ -11,7 +11,7 @@ from app.database.models.model_registry import ModelRegistry
 def test_execution_service():
 
     client = Client(host="http://localhost:11435")
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     model = (
         session.query(ModelRegistry)

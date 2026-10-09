@@ -2,7 +2,7 @@ from ollama import Client
 from unittest.mock import Mock
 
 from app.analyzer.prompt_analyzer import PromptAnalyzer
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.database.models.execution import Execution
 from app.database.models.execution_event import ExecutionEvent
 from app.execution.execution_pipeline import ExecutionPipeline
@@ -33,7 +33,7 @@ def test_execution_pipeline():
         host="http://localhost:11435"
     )
 
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     analyzer = PromptAnalyzer(
         client=client,
@@ -168,7 +168,7 @@ def test_execution_pipeline_failure():
         "Simulated Ollama failure"
     )
 
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     analyzer = Mock()
 

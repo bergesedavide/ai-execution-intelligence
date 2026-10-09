@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from app.database.engine import SessionLocal
+from app.database.engine import TestSessionLocal
 from app.database.models.execution import Execution
 from app.database.models.model_registry import ModelRegistry
 from app.database.models.quality_evaluation import (
@@ -13,7 +13,7 @@ from app.schemas.quality_evaluation import (
 
 
 def test_quality_repository_save_and_get():
-    session = SessionLocal()
+    session = TestSessionLocal()
     execution = None
     saved_evaluation = None
 
@@ -81,7 +81,7 @@ def test_quality_repository_save_and_get():
 
 
 def test_quality_repository_get_missing_evaluation():
-    session = SessionLocal()
+    session = TestSessionLocal()
 
     try:
         repository = QualityRepository(session)
