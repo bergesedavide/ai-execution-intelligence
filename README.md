@@ -110,12 +110,15 @@ Open `.env` and configure the following variables:
 
 - `POSTGRES_USER` — PostgreSQL username.
 - `POSTGRES_PASSWORD` — PostgreSQL password.
-- `POSTGRES_DB` — PostgreSQL database name.
-- `DATABASE_URL` — SQLAlchemy connection string.
+- `POSTGRES_DB` — PostgreSQL development database name.
+- `DATABASE_URL` — SQLAlchemy connection string for the development database.
+- `TEST_DATABASE_URL` — SQLAlchemy connection string for the dedicated test database.
 
-Ensure that the username, password, and database name in `DATABASE_URL` match the corresponding PostgreSQL variables.
+Ensure that the username, password, and database names in the connection strings match your PostgreSQL configuration.
 
-For example, if you choose a custom username and password, use the same values in both the PostgreSQL variables and the connection string.
+The development and test databases must be separate. The test database must exist before running the test suite.
+
+For example, the default configuration uses `ai_intelligence_db` for development and `ai_intelligence_test_db` for testing.
 
 Keep `.env` local and never commit real credentials.
 
@@ -157,9 +160,21 @@ The output includes the selected model, execution identifier, and available qual
 
 ## Testing
 
+The test suite uses a dedicated PostgreSQL database configured through `TEST_DATABASE_URL`.
+
+Before running the tests, ensure that:
+
+- PostgreSQL is running.
+- The test database exists.
+- `TEST_DATABASE_URL` points to the test database, not the development database.
+
 Run the complete test suite:
 
     python -m pytest
+
+The test setup creates the required tables and registers the model used by the tests. After the test session finishes, the tables managed by SQLAlchemy are dropped from the test database.
+
+**Warning:** The test teardown removes tables from the configured test database. Never point `TEST_DATABASE_URL` to the development or production database.
 
 The tests cover core application services, model selection, execution tracking, persistence behavior, and pipeline error handling.
 
@@ -169,7 +184,8 @@ The application uses environment variables loaded from `.env`.
 
 The main settings include:
 
-- `DATABASE_URL` — PostgreSQL connection string.
+- `DATABASE_URL` — PostgreSQL connection string for the development database.
+- `TEST_DATABASE_URL` — PostgreSQL connection string for the dedicated test database.
 - `OLLAMA_HOST` — Ollama API endpoint.
 - `ANALYZER_MODEL` — Model used for prompt analysis.
 
